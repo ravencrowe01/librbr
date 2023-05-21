@@ -1,0 +1,9 @@
+namespace librbr.Framework {
+    public interface IRNGProvider {
+        int Range (int max);
+
+        int Range (int min, int max);
+
+        void SetSeed (int seed);
+    }
+}
