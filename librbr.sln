@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "librbr.Framework", "Framework\librbr.Framework.csproj", "{6A2A6903-C773-4004-BD74-EC9C53103523}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "librbr.Framework", "librbr.Framework\librbr.Framework.csproj", "{6A2A6903-C773-4004-BD74-EC9C53103523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "librbr.World", "World\librbr.World.csproj", "{B48A1F3F-F915-4144-95F0-CDFB9484BCAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "librbr.World", "librbr.World\librbr.World.csproj", "{B48A1F3F-F915-4144-95F0-CDFB9484BCAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "librbr.Tests", "librbr.Tests\librbr.Tests.csproj", "{70D1DFB3-5E81-46EE-8C9B-1F82FCC9D33D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,9 @@ Global
 		{B48A1F3F-F915-4144-95F0-CDFB9484BCAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B48A1F3F-F915-4144-95F0-CDFB9484BCAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B48A1F3F-F915-4144-95F0-CDFB9484BCAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70D1DFB3-5E81-46EE-8C9B-1F82FCC9D33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D1DFB3-5E81-46EE-8C9B-1F82FCC9D33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D1DFB3-5E81-46EE-8C9B-1F82FCC9D33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D1DFB3-5E81-46EE-8C9B-1F82FCC9D33D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

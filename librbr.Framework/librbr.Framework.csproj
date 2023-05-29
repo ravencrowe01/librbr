@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>librbr.Framework</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    
+    <PackageReference Include="Raven.Pathfinding.Framework" Version="1.0.3" />
+    <PackageReference Include="Raven.Util" Version="1.0.3" />
+  </ItemGroup>
+</Project>
