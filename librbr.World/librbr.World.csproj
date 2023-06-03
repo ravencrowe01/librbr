@@ -12,7 +12,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>librbr.World</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
 </Project>

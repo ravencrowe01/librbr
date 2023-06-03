@@ -16,24 +16,24 @@ namespace librbr.Framework {
         }
 
         private static readonly Dictionary<Direction, Coordinate> DirectionToVector = new() {
-            {Direction.North, North },
-            {Direction.South, South },
-            {Direction.East, East },
-            {Direction.West, West }
+            { Direction.North, North },
+            { Direction.South, South },
+            { Direction.East, East },
+            { Direction.West, West }
         };
 
         public static Coordinate GetVectorFromDirection (Direction direction) => DirectionToVector[direction];
 
         private static readonly Dictionary<Coordinate, Direction> VectorToDirection = new() {
-            {North, Direction.North },
-            {South, Direction.South },
-            {East, Direction.East },
-            {West, Direction.West }
+            { North, Direction.North },
+            { South, Direction.South },
+            { East, Direction.East },
+            { West, Direction.West }
         };
 
         public static Direction GetDirectionFromVector (Coordinate vector) => VectorToDirection[vector];
 
-        public static List<Coordinate> GetAdjacentVectors (Coordinate cords, int width, int height) {
+        public static List<Coordinate> GetAdjacentCoordinates (Coordinate cords, int width, int height) {
             var list = new List<Coordinate>();
 
             foreach (var dir in (Direction[ ]) Enum.GetValues(typeof(Direction))) {
