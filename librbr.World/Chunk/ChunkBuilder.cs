@@ -132,9 +132,9 @@ namespace librbr.World.Chunk {
 
             var attempts = 0;
 
-            for (; attempts < 10; attempts++) {
+            for (; attempts < 10 && amt > 0; attempts++) {
                 var chosenDir = tempDir[_rng.Range(0, tempDir.Count)];
-                var roll = _rng.Range(10f);
+                var roll = _rng.Range(1f);
 
                 if (roll <= _wallWeights[chosenDir]) {
                     room.OpenSide(chosenDir);
@@ -143,23 +143,12 @@ namespace librbr.World.Chunk {
 
                     amt--;
                 }
-
-                if (amt <= 0) break;
             }
 
-            while (amt > 0 && attempts <= 10) {
-                var chosenDir = tempDir[_rng.Range(0, tempDir.Count)];
-                var roll = _rng.Range(10f);
-
-                if (roll <= _wallWeights[chosenDir]) {
-                    room.OpenSide(chosenDir);
-
-                    tempDir.Remove(chosenDir);
-
-                    amt--;
+            if (attempts >= 10) {
+                for (int i = 1; i <= min; i++) {
+                    room.OpenSide(directions[_rng.Range(0, directions.Count - 1)]);
                 }
-
-                attempts++;
             }
         }
         #endregion
