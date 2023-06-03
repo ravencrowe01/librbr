@@ -13,13 +13,15 @@ namespace librbr.World.Chunk {
 
             for (int x = 0; x < chunk.Size; x++) {
                 for (int y = 0; y < chunk.Size; y++) {
+
                     if (!travelled.Contains(new Coordinate(x, y)) && !(x == 0 && y == 0)) {
+
                         var finder = new AStarPathfinder(GeneratePFConfig(chunk, new Coordinate(x, y)));
                         var status = PathfindingStatus.Searching;
 
                         do {
                             status = finder.Step();
-                        } while (status != PathfindingStatus.Searching);
+                        } while (status == PathfindingStatus.Searching);
 
                         if (status == PathfindingStatus.Invalid) {
                             return false;
@@ -59,16 +61,16 @@ namespace librbr.World.Chunk {
                     if (x % 2 == 0 && y % 2 == 0) {
                         map[x, y] = new Node(true, new Coordinate(x, y));
 
-                        if (x < size - 1) {
-                            map[x + 1, y] = new Node(chunk.Rooms[x + 1, y].SideStates[Direction.East], new Coordinate(x + 1, y));
+                        if (x < size - 2) {
+                            map[x + 1, y] = new Node(chunk.Rooms[x / 2 + 1, y / 2].SideStates[Direction.East], new Coordinate(x / 2 + 1, y / 2));
                         }
 
-                        if (y < size - 1) {
-                            map[x, y + 1] = new Node(chunk.Rooms[x, y + 1].SideStates[Direction.East], new Coordinate(x, y + 1));
+                        if (y < size - 2) {
+                            map[x, y + 1] = new Node(chunk.Rooms[x / 2 , y / 2 + 1].SideStates[Direction.North], new Coordinate(x / 2 , y / 2 + 1));
                         }
                     }
 
-                    if (x % 2 == 1 && x % 2 == 1) {
+                    if (x % 2 == 1 && y % 2 == 1) {
                         map[x, y] = new Node(false, new Coordinate(x, y));
                     }
                 }
