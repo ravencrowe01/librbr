@@ -9,12 +9,12 @@ using Raven.Util;
 namespace librbr.World.Chunk {
     public class ChunkValidator : IChunkValidator {
         public bool ValidateChunk (IChunkConfig chunk) {
-            var travelled = new List<Coordinate>();
+            var traveled = new List<Coordinate>();
 
             for (int x = 0; x < chunk.Size; x++) {
                 for (int y = 0; y < chunk.Size; y++) {
 
-                    if (!travelled.Contains(new Coordinate(x, y)) && !(x == 0 && y == 0)) {
+                    if (!traveled.Contains(new Coordinate(x, y)) && !(x == 0 && y == 0)) {
 
                         var finder = new AStarPathfinder(GeneratePFConfig(chunk, new Coordinate(x, y)));
                         var status = PathfindingStatus.Searching;
@@ -32,8 +32,8 @@ namespace librbr.World.Chunk {
                         // traversed nodes can be skipped, as they are already valid.
                         foreach (var node in path) {
                             // Looks like I did need to override it.
-                            if(!travelled.Contains(node.Coordinates)) {
-                                travelled.Add(node.Coordinates);
+                            if (!traveled.Contains(node.Coordinates)) {
+                                traveled.Add(node.Coordinates);
                             }
                         }
                     }
@@ -49,7 +49,6 @@ namespace librbr.World.Chunk {
                 Target = new Node(true, chunk.Center),
                 Map = BuildNodeMap(chunk)
             };
-            throw new NotImplementedException();
         }
 
         private Node[ , ] BuildNodeMap (IChunkConfig chunk) {
@@ -66,7 +65,7 @@ namespace librbr.World.Chunk {
                         }
 
                         if (y < size - 2) {
-                            map[x, y + 1] = new Node(chunk.Rooms[x / 2 , y / 2 + 1].SideStates[Direction.North], new Coordinate(x / 2 , y / 2 + 1));
+                            map[x, y + 1] = new Node(chunk.Rooms[x / 2, y / 2 + 1].SideStates[Direction.North], new Coordinate(x / 2, y / 2 + 1));
                         }
                     }
 
@@ -77,12 +76,6 @@ namespace librbr.World.Chunk {
             }
 
             return map;
-        }
-
-        private class PathfinderConfig : IPathfinderConfig {
-            public Node Start { get; set; }
-            public Node Target { get; set; }
-            public Node[ , ] Map { get; set; }
         }
     }
 }

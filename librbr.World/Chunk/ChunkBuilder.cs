@@ -90,8 +90,7 @@ namespace librbr.World.Chunk {
         }
 
         private IRoomConfig ConstructRoom (int x, int y, Coordinate center) {
-            var room = new ProtoRoom();
-            room.Coordinates = new Coordinate(x, y);
+            var room = new ProtoRoom(new Coordinate(x, y));
             _rng.SetSeed(_seed ^ x ^ y);
 
             AddOpenSides(room, GetOpenableSides(x, y), room.Coordinates == center ? 1 : 2);
