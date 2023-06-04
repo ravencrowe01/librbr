@@ -1,13 +1,7 @@
 namespace librbr.Tests;
 
-using librbr.Framework.World;
-using librbr.Framework.World.Chunk;
-using librbr.World;
-using librbr.World.Chunk;
-using Raven.Util;
-
-public class Tests {
-    private IChunkConfig _chunkA;
+public class ChunkValidatorTests {
+    private ProtoChunk _chunkA;
 
     [SetUp]
     public void Setup ( ) {
@@ -15,8 +9,10 @@ public class Tests {
     }
 
     [Test]
-    public void Test1 ( ) {
+    public void ChunkValidator_ChunkA_Valid ( ) {
         var val = new ChunkValidator();
+
+        // System.Console.WriteLine(_chunkA.ToString());
 
         Assert.That(val.ValidateChunk(_chunkA), Is.EqualTo(true));
     }
@@ -71,7 +67,7 @@ public class Tests {
         var r12 = new ProtoRoom(new Coordinate(1, 2));
         r12.OpenSide(Direction.North);
         r12.OpenSide(Direction.South);
-        r12.OpenSide(Direction.East);
+        r12.OpenSide(Direction.West);
         _chunkA.SetRoom(new Coordinate(1, 2), r12);
 
         var r22 = new ProtoRoom(new Coordinate(2, 2));

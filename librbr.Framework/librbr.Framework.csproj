@@ -10,6 +10,6 @@
   <ItemGroup>
     
     <PackageReference Include="Raven.Pathfinding.Framework" Version="1.0.3" />
-    <PackageReference Include="Raven.Util" Version="1.0.3" />
+    <PackageReference Include="Raven.Util" Version="1.0.4" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Raven.Pathfinding.AStar" Version="1.0.4" />
+    <PackageReference Include="Raven.Pathfinding.AStar" Version="1.0.7" />
   </ItemGroup>
 
   <PropertyGroup>

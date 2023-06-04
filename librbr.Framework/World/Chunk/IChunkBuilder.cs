@@ -6,6 +6,6 @@ namespace librbr.Framework.World.Chunk {
         IChunkBuilder WithCoordinates (Coordinate cords);
         IChunkBuilder WithDimensions (int size);
         IChunkBuilder WithWallWeights (float north = 1f, float south = 1f, float east = 1f, float west = 1f);
-        IChunkConfig BuildChunk (IChunkValidator validator);
+        IChunkConfig? BuildChunk (IChunkValidator validator);
     }
 }

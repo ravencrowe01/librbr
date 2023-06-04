@@ -53,10 +53,14 @@ namespace librbr.World.Chunk {
         }
 
         public IChunkBuilder WithWallWeights (float north = 1f, float south = 1f, float east = 1f, float west = 1f) {
+            _wallWeights[Direction.North] = north;
+            _wallWeights[Direction.South] = south;
+            _wallWeights[Direction.East] = east;
+            _wallWeights[Direction.West] = west;
             return this;
         }
 
-        public IChunkConfig BuildChunk (IChunkValidator validator) {
+        public IChunkConfig? BuildChunk (IChunkValidator validator) {
             // TODO ChunkBuilderMissingArgsException
             if (_cords is null) {
                 throw new Exception();
@@ -65,6 +69,7 @@ namespace librbr.World.Chunk {
             _seed = _seed ^ _cords.X ^ _cords.Y;
 
             var chunk = new ProtoChunk(_size, _cords);
+            var attempts = 0;
 
             do {
                 ConstructRooms(chunk);
@@ -72,7 +77,12 @@ namespace librbr.World.Chunk {
                 AddChunkConnections(chunk);
 
                 FixRoomConnections(chunk);
-            } while (!validator.ValidateChunk(chunk));
+                attempts++;
+            } while (!validator.ValidateChunk(chunk) && attempts < 10000);
+
+            if(attempts >= 10000) {
+                return null;
+            }
 
             return chunk;
         }
@@ -133,7 +143,7 @@ namespace librbr.World.Chunk {
             var attempts = 0;
 
             for (; attempts < 10 && amt > 0; attempts++) {
-                var chosenDir = tempDir[_rng.Range(0, tempDir.Count)];
+                var chosenDir = tempDir[_rng.Range(0, tempDir.Count - 1)];
                 var roll = _rng.Range(1f);
 
                 if (roll <= _wallWeights[chosenDir]) {

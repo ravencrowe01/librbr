@@ -55,5 +55,35 @@ namespace librbr.World {
         public void OpenRoomSide (Coordinate room, Direction dir) => _rooms[(int) room.X, (int) room.Y].OpenSide(dir);
 
         public void CloseRoomSide (Coordinate room, Direction dir) => _rooms[(int) room.X, (int) room.Y].CloseSide(dir);
+
+        public override string ToString ( ) {
+            var str = "";
+            var exp = (Size * 2) - 1;
+
+            for (int y = exp - 1; y >= 0; y--) {
+                for (int x = 0; x < exp; x++) {
+                    if(x % 2 == 0 && y % 2 == 0) {
+                        str += "O ";
+                    }
+
+                    else if(x % 2 == 1 && y % 2 == 1) {
+                        str += "X ";
+                    }
+
+                    else {
+                        if (x > 0 && x % 2 == 1) {
+                            str += _rooms[(int) MathF.Ceiling((float) x / 2f) - 1, y / 2].SideStates[Direction.East] ? "O " : "X ";
+                        }
+
+                        if (y < exp - 1 && y % 2 == 1) {
+                            str += _rooms[x / 2, y / 2 + 1].SideStates[Direction.South] ? "O " : "X ";
+                        }
+                    }
+                }
+                str += "\n";
+            }
+
+            return str;
+        }
     }
 }

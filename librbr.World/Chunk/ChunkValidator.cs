@@ -11,12 +11,15 @@ namespace librbr.World.Chunk {
         public bool ValidateChunk (IChunkConfig chunk) {
             var traveled = new List<Coordinate>();
 
+            var map = BuildNodeMap(chunk);
+
             for (int x = 0; x < chunk.Size; x++) {
                 for (int y = 0; y < chunk.Size; y++) {
+                    var current = new Coordinate(x, y);
 
-                    if (!traveled.Contains(new Coordinate(x, y)) && !(x == 0 && y == 0)) {
+                    if (!traveled.Contains(current * 2) && current != chunk.Center) {
 
-                        var finder = new AStarPathfinder(GeneratePFConfig(chunk, new Coordinate(x, y)));
+                        var finder = new AStarPathfinder(GeneratePFConfig(chunk, current * 2, map));
                         var status = PathfindingStatus.Searching;
 
                         do {
@@ -30,6 +33,7 @@ namespace librbr.World.Chunk {
                         var path = finder.BuildPath();
                         // Add all of the nodes we passed through to get to the center so that 
                         // traversed nodes can be skipped, as they are already valid.
+                        // Pre-optimization for arbitrarily large chunks.
                         foreach (var node in path) {
                             // Looks like I did need to override it.
                             if (!traveled.Contains(node.Coordinates)) {
@@ -43,11 +47,11 @@ namespace librbr.World.Chunk {
             return true;
         }
 
-        private IPathfinderConfig GeneratePFConfig (IChunkConfig chunk, Coordinate start) {
+        private IPathfinderConfig GeneratePFConfig (IChunkConfig chunk, Coordinate start, Node[,] map) {
             return new PathfinderConfig {
                 Start = new Node(true, start),
-                Target = new Node(true, chunk.Center),
-                Map = BuildNodeMap(chunk)
+                Target = new Node(true, chunk.Center * 2),
+                Map = map
             };
         }
 
@@ -59,18 +63,22 @@ namespace librbr.World.Chunk {
                 for (int y = 0; y < size; y++) {
                     if (x % 2 == 0 && y % 2 == 0) {
                         map[x, y] = new Node(true, new Coordinate(x, y));
-
-                        if (x < size - 2) {
-                            map[x + 1, y] = new Node(chunk.Rooms[x / 2 + 1, y / 2].SideStates[Direction.East], new Coordinate(x / 2 + 1, y / 2));
-                        }
-
-                        if (y < size - 2) {
-                            map[x, y + 1] = new Node(chunk.Rooms[x / 2, y / 2 + 1].SideStates[Direction.North], new Coordinate(x / 2, y / 2 + 1));
-                        }
                     }
 
-                    if (x % 2 == 1 && y % 2 == 1) {
+                    else if (x % 2 == 1 && y % 2 == 1) {
                         map[x, y] = new Node(false, new Coordinate(x, y));
+                    }
+
+                    else {
+                        if (x > 0 && x % 2 == 1) {
+                            var xx = (int) MathF.Ceiling((float) x / 2f) - 1;
+                            map[x, y] = new Node(chunk.Rooms[xx , y / 2].SideStates[Direction.East], new Coordinate(x, y));
+                        }
+
+                        if (y > 0 && y % 2 == 1) {
+                            var yy = (int) MathF.Ceiling((float) y / 2f) - 1;
+                            map[x, y] = new Node(chunk.Rooms[x / 2, yy].SideStates[Direction.North], new Coordinate(x, y));
+                        }
                     }
                 }
             }
